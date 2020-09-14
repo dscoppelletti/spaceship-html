@@ -25,18 +25,16 @@ import android.view.MenuItem
 import androidx.annotation.UiThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import it.scoppelletti.spaceship.app.ExceptionDialogFragment
 import it.scoppelletti.spaceship.app.OnDialogResultListener
 import it.scoppelletti.spaceship.app.appComponent
 import it.scoppelletti.spaceship.app.showExceptionDialog
 import it.scoppelletti.spaceship.app.tryFinish
 import it.scoppelletti.spaceship.html.HtmlExt
-import it.scoppelletti.spaceship.html.R
+import it.scoppelletti.spaceship.html.databinding.ItScoppellettiHtmlviewerActivityBinding
 import it.scoppelletti.spaceship.html.lifecycle.HtmlViewerState
 import it.scoppelletti.spaceship.html.lifecycle.HtmlViewerViewModel
 import it.scoppelletti.spaceship.lifecycle.ViewModelProviderEx
-import kotlinx.android.synthetic.main.it_scoppelletti_htmlviewer_activity.*
 import mu.KotlinLogging
 
 /**
@@ -48,6 +46,7 @@ import mu.KotlinLogging
 public class HtmlViewerActivity : AppCompatActivity(), OnDialogResultListener {
 
     private lateinit var viewModel: HtmlViewerViewModel
+    private lateinit var binding: ItScoppellettiHtmlviewerActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val textId: Int
@@ -56,8 +55,11 @@ public class HtmlViewerActivity : AppCompatActivity(), OnDialogResultListener {
         val viewModelProvider: ViewModelProviderEx
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.it_scoppelletti_htmlviewer_activity)
-        setSupportActionBar(toolbar)
+
+        binding = ItScoppellettiHtmlviewerActivityBinding.inflate(
+                layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         if (intent.getBooleanExtra(HtmlViewerActivity.PROP_HOMEASUP, false)) {
             actionBar = supportActionBar!!
@@ -70,16 +72,16 @@ public class HtmlViewerActivity : AppCompatActivity(), OnDialogResultListener {
             setTitle(titleId)
         }
 
-        txtContent.movementMethod = LinkMovementMethod.getInstance()
+        binding.txtContent.movementMethod = LinkMovementMethod.getInstance()
 
         viewModelProvider = appComponent().viewModelProvider()
         viewModel = viewModelProvider.get(this, HtmlViewerViewModel::class.java)
 
-        viewModel.state.observe(this, Observer { state ->
+        viewModel.state.observe(this) { state ->
             if (state != null) {
                 stateObserver(state)
             }
-        })
+        }
 
         textId = intent.getIntExtra(HtmlViewerActivity.PROP_TEXT, 0)
         if (textId > 0) {
@@ -90,7 +92,7 @@ public class HtmlViewerActivity : AppCompatActivity(), OnDialogResultListener {
     }
 
     private fun stateObserver(state: HtmlViewerState) {
-        txtContent.text = state.text
+        binding.txtContent.text = state.text
 
         state.error?.poll()?.let { ex ->
             showExceptionDialog(ex)
