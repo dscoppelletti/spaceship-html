@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
- * Copyright (C) 2018 Dario Scoppelletti, <http://www.scoppelletti.it/>.
+/*
+ * Copyright (C) 2020 Dario Scoppelletti, <http://www.scoppelletti.it/>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
--->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="it.scoppelletti.spaceship.html">
-    <uses-permission android:name="android.permission.INTERNET" />
-</manifest>
+ */
+
+@file:Suppress("RedundantVisibilityModifier")
+
+package it.scoppelletti.spaceship.html
+
+/**
+ * Marks the class bindable as Javascript interface into
+ * [it.scoppelletti.spaceship.html.app.HtmlViewFragment].
+ *
+ * @see   it.scoppelletti.spaceship.html.inject.InjectJavascriptRepository
+ * @since 1.0.0
+ */
+public interface JavascriptModule
+

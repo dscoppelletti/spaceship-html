@@ -12,6 +12,12 @@ Provide classes for manipulating HTML documents.
 
 Contains high-level classes encapsulating the overall Android application model.
 
+# Package it.scoppelletti.spaceship.databinding
+
+Contains components used when developing applications with data binding.
+
+* [Data Binding Library](http://developer.android.com/topic/libraries/data-binding)
+
 # Package it.scoppelletti.spaceship.html.inject
 
 Dependency injection.

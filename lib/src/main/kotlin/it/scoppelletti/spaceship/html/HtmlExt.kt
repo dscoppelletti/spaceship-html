@@ -38,28 +38,12 @@ public object HtmlExt {
     /**
      * Name of the `Html.TagHandler` dependency.
      */
-    public const val DEP_TAGHANDLER = "it.scoppelletti.spaceship.html.2"
-
-    /**
-     * Property indicating whether `home` should be displayed as an `up`
-     * affordance.
-     */
-    public const val PROP_HOMEASUP = "it.scoppelletti.spaceship.html.1"
-
-    /**
-     * Property containing an HTML text as a string resource ID.
-     */
-    public const val PROP_HTML = "it.scoppelletti.spaceship.html.2"
+    public const val DEP_TAGHANDLER = "it.scoppelletti.spaceship.html.1"
 
     /**
      * Property containing a text.
      */
-    public const val PROP_TEXT = "it.scoppelletti.spaceship.html.3"
-
-    /**
-     * Property containing a title as a string resource ID.
-     */
-    public const val PROP_TITLE = "it.scoppelletti.spaceship.html.4"
+    public const val PROP_TEXT = "it.scoppelletti.spaceship.html.1"
 }
 
 private const val SPAN_START = "<span>"

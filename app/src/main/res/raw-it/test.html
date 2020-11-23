@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Italian</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script type="text/javascript">
+        <!--
+            var htmlModule = spaceshipRepository.getModule('it.scoppelletti.html.JavascriptModule');
+        //-->
+        </script>
+    </head>
+    <body>
+        <h1>Italian text</h1>
+        <p>Il nome dell'applicazione è
+            <script type="text/javascript">
+            <!--
+                document.write('<b>' + htmlModule.getApplicationLabel() + '</b>.');
+            -->
+            </script>
+        </p>
+        <p>La versione dell'applicazione è
+            <script type="text/javascript">
+            <!--
+                document.write('<b>' + htmlModule.getApplicationVersion() + '</b>.');
+            -->
+            </script>
+        </p>
+        <p>Questa è una
+            <script type="text/javascript">
+            <!--
+                document.write('<i>' + htmlModule.getResourceValue('string_res', 'string') + '</i>.');
+            -->
+            </script>
+        </p>
+        <p><a href="http://www.scoppelletti.it">Click here</a>.</p>
+    </body>
+</html>

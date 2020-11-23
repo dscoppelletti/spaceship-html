@@ -27,13 +27,12 @@ import it.scoppelletti.spaceship.html.ApplicationLabelTagHandler
 import it.scoppelletti.spaceship.html.ApplicationVersionTagHandler
 import it.scoppelletti.spaceship.html.ContentHandlerTagHandler
 import it.scoppelletti.spaceship.html.HtmlExt
+import it.scoppelletti.spaceship.html.HtmlJavascriptModule
 import it.scoppelletti.spaceship.html.HtmlTagHandler
+import it.scoppelletti.spaceship.html.JavascriptModule
+import it.scoppelletti.spaceship.html.JavascriptRepository
 import it.scoppelletti.spaceship.html.ResourceTagHandler
-import it.scoppelletti.spaceship.html.lifecycle.HtmlViewerViewModel
-import it.scoppelletti.spaceship.html.lifecycle.HtmlViewerViewModelFactory
 import it.scoppelletti.spaceship.inject.AppModule
-import it.scoppelletti.spaceship.inject.ViewModelKey
-import it.scoppelletti.spaceship.lifecycle.ViewModelProviderEx
 import javax.inject.Named
 
 /**
@@ -80,8 +79,13 @@ public abstract class HtmlModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(HtmlViewerViewModel::class)
-    public abstract fun bindHtmlViewerViewModelFactory(
-            obj: HtmlViewerViewModelFactory
-    ): ViewModelProviderEx.Factory
+    @StringKey(HtmlJavascriptModule.TAG)
+    public abstract fun bindHtmlJavascriptModule(
+            module: HtmlJavascriptModule
+    ): JavascriptModule
+
+    @Binds
+    public abstract fun bindJavascriptRepository(
+            module: InjectJavascriptRepository
+    ): JavascriptRepository
 }

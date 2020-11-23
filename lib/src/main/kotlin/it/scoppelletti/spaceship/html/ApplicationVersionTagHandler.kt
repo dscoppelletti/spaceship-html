@@ -28,7 +28,7 @@ import org.xml.sax.XMLReader
 import javax.inject.Inject
 
 /**
- * HTML custom tag for inserting the application version.
+ * HTML custom tag for inserting the version of this application.
  *
  * @since 1.0.0
  */

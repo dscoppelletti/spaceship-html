@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
-    <string name="html_title">HTML viewer</string>
+    <string name="cmd_htmlview">HTML view</string>
+    <string name="cmd_htmltext">HTML text</string>
     <string name="string_res">Inserted string</string>
     <string name="html_text"><![CDATA[<p>The first paragraph is simple.</p>
 <p><it-scoppelletti-contentHandler>Integrate the content handler.</p>

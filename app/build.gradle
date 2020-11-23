@@ -13,6 +13,9 @@ android {
         versionName '1.0.0'
         vectorDrawables.useSupportLibrary = true
     }
+    buildFeatures {
+        viewBinding = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -43,6 +46,11 @@ dependencies {
     implementation 'androidx.activity:activity-ktx'
     implementation 'androidx.annotation:annotation'
     implementation 'androidx.appcompat:appcompat'
+    implementation 'androidx.fragment:fragment-ktx'
+    implementation 'androidx.lifecycle:lifecycle-common-java8'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx'
     implementation 'com.google.android.material:material'
     implementation 'com.google.dagger:dagger'
     kapt 'com.google.dagger:dagger-compiler'
