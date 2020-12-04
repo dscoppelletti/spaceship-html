@@ -24,16 +24,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.annotation.UiThread
 import androidx.fragment.app.Fragment
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import by.kirich1409.viewbindingdelegate.viewBinding
 import it.scoppelletti.spaceship.html.JavascriptRepository
+import it.scoppelletti.spaceship.html.R
 import it.scoppelletti.spaceship.html.databinding.HtmlViewFragmentBinding
 import mu.KotlinLogging
 
@@ -43,18 +42,10 @@ import mu.KotlinLogging
  * @since 1.0.0
  */
 @UiThread
-public class HtmlViewFragment : Fragment() {
+public class HtmlViewFragment :
+        Fragment(R.layout.it_scoppelletti_html_htmlview_fragment) {
 
-    private var binding: HtmlViewFragmentBinding? = null
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        binding = HtmlViewFragmentBinding.inflate(inflater, container, false)
-        return binding?.root
-    }
+    private val binding by viewBinding(HtmlViewFragmentBinding::bind)
 
     @SuppressLint("AddJavascriptInterface", "SetJavaScriptEnabled")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -73,7 +64,7 @@ public class HtmlViewFragment : Fragment() {
                         WebViewAssetLoader.ResourcesPathHandler(ctx))
                 .build()
 
-        binding?.webView?.let { view ->
+        binding.webView.let { view ->
             view.webViewClient = object : WebViewClientCompat() {
                 override fun shouldInterceptRequest(
                         view: WebView?,
@@ -109,11 +100,6 @@ public class HtmlViewFragment : Fragment() {
                 view.loadUrl(url)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
     }
 
     public companion object {

@@ -74,6 +74,7 @@ dependencies {
     api 'it.scoppelletti.spaceship:spaceship-stdlib'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core'
+    implementation 'com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection'
     implementation 'io.github.microutils:kotlin-logging'
     implementation 'org.slf4j:slf4j-api'
 }
