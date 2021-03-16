@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Dario Scoppelletti, <http://www.scoppelletti.it/>.
+ * Copyright (C) 2020-2021 Dario Scoppelletti, <http://www.scoppelletti.it/>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.annotation.UiThread
@@ -37,7 +38,7 @@ import it.scoppelletti.spaceship.html.databinding.HtmlViewFragmentBinding
 import mu.KotlinLogging
 
 /**
- * Activity hosting a `WebView` control.
+ * Fragment hosting a `WebView` control.
  *
  * @since 1.0.0
  */
@@ -47,14 +48,11 @@ public class HtmlViewFragment :
 
     private val binding by viewBinding(HtmlViewFragmentBinding::bind)
 
-    @SuppressLint("AddJavascriptInterface", "SetJavaScriptEnabled")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        val url: String?
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val ctx: Context
-        val repo: JavascriptRepository
         val assetLoader: WebViewAssetLoader
 
-        super.onActivityCreated(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         ctx = requireContext()
         assetLoader = WebViewAssetLoader.Builder()
@@ -64,8 +62,8 @@ public class HtmlViewFragment :
                         WebViewAssetLoader.ResourcesPathHandler(ctx))
                 .build()
 
-        binding.webView.let { view ->
-            view.webViewClient = object : WebViewClientCompat() {
+        binding.webView.let { webView ->
+            webView.webViewClient = object : WebViewClientCompat() {
                 override fun shouldInterceptRequest(
                         view: WebView?,
                         url: String?
@@ -86,8 +84,19 @@ public class HtmlViewFragment :
                     return true
                 }
             }
+        }
+    }
 
+    @SuppressLint("AddJavascriptInterface", "SetJavaScriptEnabled")
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        val url: String?
+        val repo: JavascriptRepository
+
+        super.onViewStateRestored(savedInstanceState)
+
+        binding.webView.let { view ->
             view.settings.javaScriptEnabled = true
+
             repo = requireActivity().htmlComponent().javascriptRepository()
             view.addJavascriptInterface(repo, JavascriptRepository.MODULE)
 
