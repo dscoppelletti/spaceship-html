@@ -27,11 +27,9 @@ android {
         release {
             minifyEnabled false
             consumerProguardFiles 'consumer-rules.pro'
-            debuggable false
         }
         debug {
             minifyEnabled false
-            debuggable true
         }
     }
     compileOptions {
