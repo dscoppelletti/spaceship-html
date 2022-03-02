@@ -63,6 +63,7 @@ dependencies {
     api 'androidx.activity:activity-ktx'
     api 'androidx.annotation:annotation'
     api 'androidx.appcompat:appcompat'
+    api 'androidx.browser:browser'
     api 'androidx.fragment:fragment-ktx'
     api 'androidx.webkit:webkit'
     api 'com.google.android.material:material'
