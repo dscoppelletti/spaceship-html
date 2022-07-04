@@ -27,7 +27,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 /**
- * Module binded as Javascript interface into
+ * Module bound as Javascript interface into
  * [it.scoppelletti.spaceship.html.app.HtmlViewFragment] in order to connect
  * to the injected [it.scoppelletti.spaceship.html.JavascriptModule]
  * implementations.

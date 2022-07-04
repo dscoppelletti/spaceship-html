@@ -28,7 +28,7 @@ import android.webkit.JavascriptInterface
 public interface JavascriptRepository {
 
     /**
-     * Returns a Javascriot module.
+     * Returns a Javascript module.
      *
      * @param  tag Tag of the module.
      * @return     The instance.

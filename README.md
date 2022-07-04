@@ -12,7 +12,7 @@ Provide classes for manipulating HTML documents.
 
 Contains high-level classes encapsulating the overall Android application model.
 
-# Package it.scoppelletti.spaceship.html,databinding
+# Package it.scoppelletti.spaceship.html.databinding
 
 Contains components used when developing applications with data binding.
 

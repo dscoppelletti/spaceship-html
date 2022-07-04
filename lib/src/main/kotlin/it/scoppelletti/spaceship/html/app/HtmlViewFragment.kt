@@ -22,9 +22,9 @@ package it.scoppelletti.spaceship.html.app
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.annotation.UiThread
@@ -65,19 +65,16 @@ public class HtmlViewFragment :
         binding.webView.let { webView ->
             webView.webViewClient = object : WebViewClientCompat() {
                 override fun shouldInterceptRequest(
-                        view: WebView?,
-                        url: String?
-                ): WebResourceResponse? {
-                    return url?.let {
-                        assetLoader.shouldInterceptRequest(Uri.parse(it))
-                    }
-                }
+                        view: WebView,
+                        req: WebResourceRequest
+                ): WebResourceResponse? =
+                    assetLoader.shouldInterceptRequest(req.url)
 
                 override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        url: String?
+                        view: WebView,
+                        req: WebResourceRequest
                 ): Boolean {
-                    Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+                    Intent(Intent.ACTION_VIEW, req.url).apply {
                         startActivity(this)
                     }
 
