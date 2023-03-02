@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-        "RemoveRedundantQualifierName", "unused")
-
 package it.scoppelletti.spaceship.html.app
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -49,16 +45,13 @@ public class HtmlViewFragment :
     private val binding by viewBinding(HtmlViewFragmentBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val ctx: Context
-        val assetLoader: WebViewAssetLoader
-
         super.onViewCreated(view, savedInstanceState)
 
-        ctx = requireContext()
-        assetLoader = WebViewAssetLoader.Builder()
-                .addPathHandler(HtmlViewFragment.PATH_ASSET,
+        val ctx = requireContext()
+        val assetLoader = WebViewAssetLoader.Builder()
+                .addPathHandler(PATH_ASSET,
                         WebViewAssetLoader.AssetsPathHandler(ctx))
-                .addPathHandler(HtmlViewFragment.PATH_RES,
+                .addPathHandler(PATH_RES,
                         WebViewAssetLoader.ResourcesPathHandler(ctx))
                 .build()
 
@@ -97,10 +90,10 @@ public class HtmlViewFragment :
             repo = requireActivity().htmlComponent().javascriptRepository()
             view.addJavascriptInterface(repo, JavascriptRepository.MODULE)
 
-            url = requireArguments().getString(HtmlViewFragment.PROP_URL)
+            url = requireArguments().getString(PROP_URL)
             if (url.isNullOrBlank()) {
                 logger.error {
-                    "Missing argument ${HtmlViewFragment.PROP_URL}."
+                    "Missing argument $PROP_URL."
                 }
             } else {
                 view.loadUrl(url)
@@ -113,13 +106,13 @@ public class HtmlViewFragment :
         /**
          * Base URL of the files embedded as assets.
          */
-        public const val URL_ASSET =
+        public const val URL_ASSET: String =
                 "https://appassets.androidplatform.net/asset/"
 
         /**
          * Base URL of the files embedded as resources.
          */
-        public const val URL_RESOURCE =
+        public const val URL_RESOURCE: String =
                 "https://appassets.androidplatform.net/res/"
 
         private const val PATH_ASSET = "/asset/"
@@ -134,7 +127,7 @@ public class HtmlViewFragment :
          */
         public fun newInstance(url: String): HtmlViewFragment {
             val args = Bundle().apply {
-                putString(HtmlViewFragment.PROP_URL, url)
+                putString(PROP_URL, url)
             }
 
             return HtmlViewFragment().apply {

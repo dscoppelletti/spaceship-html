@@ -14,15 +14,12 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-        "RemoveRedundantQualifierName")
-
 package it.scoppelletti.spaceship.html
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.text.Editable
+import it.scoppelletti.spaceship.app.AppExt
 import mu.KotlinLogging
 import org.xml.sax.XMLReader
 import javax.inject.Inject
@@ -35,7 +32,7 @@ import javax.inject.Inject
 public class ApplicationLabelTagHandler @Inject constructor(
         private val context: Context,
         private val packageManager: PackageManager
-) : HtmlTagHandler(ApplicationLabelTagHandler.TAG) {
+) : HtmlTagHandler(TAG) {
 
     override fun handleTag(
             output: Editable,
@@ -43,14 +40,10 @@ public class ApplicationLabelTagHandler @Inject constructor(
             end: Int,
             xmlReader: XMLReader
     ) {
-        val applLabel: CharSequence
-        val pkgName: String
-        val applInfo: ApplicationInfo
+        val pkgName = context.packageName
 
-        pkgName = context.packageName
-
-        applInfo = try {
-            packageManager.getApplicationInfo(pkgName, 0)
+        val applInfo = try {
+            AppExt.getApplicationInfo(packageManager, pkgName, 0)
         } catch (ex: PackageManager.NameNotFoundException) {
             logger.error(ex) {
                 "Failed to get ApplicationInfo for package $pkgName."
@@ -59,7 +52,7 @@ public class ApplicationLabelTagHandler @Inject constructor(
             context.applicationInfo
         }
 
-        applLabel = packageManager.getApplicationLabel(applInfo)
+        val applLabel = packageManager.getApplicationLabel(applInfo)
         output.replace(start, end, applLabel)
     }
 
@@ -68,7 +61,7 @@ public class ApplicationLabelTagHandler @Inject constructor(
         /**
          * Tag.
          */
-        public const val TAG = "it-scoppelletti-appLabel"
+        public const val TAG: String = "it-scoppelletti-appLabel"
 
         private val logger = KotlinLogging.logger {}
     }

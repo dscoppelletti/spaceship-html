@@ -14,8 +14,6 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier")
-
 package it.scoppelletti.spaceship.html.inject
 
 import android.text.Editable
@@ -100,9 +98,7 @@ public class InjectHtmlTagHandler @Inject constructor(
      *              returns `null`.
      */
     private fun getLastTag(text: Editable, tag: String?): HtmlTagHandler? {
-        val span: Array<HtmlTagHandler>
-
-        span = text.getSpans(0, text.length, HtmlTagHandler::class.java)
+        val span = text.getSpans(0, text.length, HtmlTagHandler::class.java)
         return span.findLast { it.tag.equals(tag, true) &&
                 text.getSpanFlags(it) == Spanned.SPAN_MARK_MARK }
     }

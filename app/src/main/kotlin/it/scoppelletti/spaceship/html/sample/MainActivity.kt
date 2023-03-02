@@ -1,12 +1,9 @@
-@file:Suppress("JoinDeclarationAndAssignment")
-
 package it.scoppelletti.spaceship.html.sample
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import it.scoppelletti.spaceship.html.app.HtmlViewFragment
 import it.scoppelletti.spaceship.html.sample.databinding.MainActivityBinding
 
@@ -42,9 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToFragment(itemId: Int): Boolean {
-        val fragment: Fragment
-
-        fragment = when (itemId) {
+        val fragment = when (itemId) {
             R.id.cmd_htmlview -> {
                 HtmlViewFragment.newInstance(
                         HtmlViewFragment.URL_RESOURCE + "raw/test.html")
@@ -68,10 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        val fragment: Fragment?
-
-        fragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
-        when (fragment) {
+        when (supportFragmentManager.findFragmentById(R.id.contentFrame)) {
             is HtmlViewFragment -> {
                 menu?.findItem(R.id.cmd_htmlview)?.isChecked = true
             }

@@ -14,8 +14,6 @@
  * limit
  */
 
-@file:Suppress("RedundantVisibilityModifier")
-
 package it.scoppelletti.spaceship.html
 
 import android.text.Editable

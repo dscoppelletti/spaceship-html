@@ -14,15 +14,13 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-        "RemoveRedundantQualifierName")
-
 package it.scoppelletti.spaceship.html
 
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.text.Editable
+import it.scoppelletti.spaceship.app.AppExt
 import mu.KotlinLogging
 import org.xml.sax.XMLReader
 import javax.inject.Inject
@@ -35,7 +33,7 @@ import javax.inject.Inject
 public class ApplicationVersionTagHandler @Inject constructor(
         private val context: Context,
         private val packageManager: PackageManager
-) : HtmlTagHandler(ApplicationVersionTagHandler.TAG) {
+) : HtmlTagHandler(TAG) {
 
     override fun handleTag(
             output: Editable,
@@ -43,14 +41,11 @@ public class ApplicationVersionTagHandler @Inject constructor(
             end: Int,
             xmlReader: XMLReader
     ) {
-        val version: CharSequence
-        val pkgName: String
         val pkgInfo: PackageInfo
-
-        pkgName = context.packageName
+        val pkgName = context.packageName
 
         try {
-            pkgInfo = packageManager.getPackageInfo(pkgName, 0)
+            pkgInfo = AppExt.getPackageInfo(packageManager, pkgName, 0)
         } catch (ex: PackageManager.NameNotFoundException) {
             logger.error(ex) {
                 "Failed to get PackageInfo for package $pkgName."
@@ -59,7 +54,7 @@ public class ApplicationVersionTagHandler @Inject constructor(
             return
         }
 
-        version = pkgInfo.versionName
+        val version = pkgInfo.versionName
         output.replace(start, end, version)
     }
 
@@ -68,7 +63,7 @@ public class ApplicationVersionTagHandler @Inject constructor(
         /**
          * Tag.
          */
-        public const val TAG = "it-scoppelletti-appVersion"
+        public const val TAG: String = "it-scoppelletti-appVersion"
 
         private val logger = KotlinLogging.logger {}
     }

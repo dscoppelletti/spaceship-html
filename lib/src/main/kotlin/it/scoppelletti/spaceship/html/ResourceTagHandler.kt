@@ -14,11 +14,9 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-        "RemoveRedundantQualifierName")
-
 package it.scoppelletti.spaceship.html
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.text.Editable
@@ -38,52 +36,49 @@ import javax.inject.Inject
 public class ResourceTagHandler @Inject constructor(
         private val context: Context,
         private val resources: Resources
-) : HtmlTagHandler(ResourceTagHandler.TAG) {
+) : HtmlTagHandler(TAG) {
 
+    @SuppressLint("DiscouragedApi")
     override fun handleTag(
             output: Editable,
             start: Int, end: Int,
             xmlReader: XMLReader
     ) {
         val resId: Int
-        val pkgName: String
-        val stringValue: String
         val name: String?
         val resType: String?
-        val attrs: Map<String, String>
 
-        attrs = xmlReader.getCurrentAttributes()
-
+        val attrs = xmlReader.getCurrentAttributes()
         name = attrs.entries.firstOrNull {
-            ResourceTagHandler.ATTR_NAME.equals(it.key, true)
+            ATTR_NAME.equals(it.key, true)
         } ?.value
 
         if (name.isNullOrBlank()) {
             logger.error {
-                "Attribute ${ResourceTagHandler.ATTR_NAME} not set in tag $tag."
+                "Attribute $ATTR_NAME not set in tag $tag."
             }
 
             return
         }
 
         resType = attrs.entries.firstOrNull {
-            ResourceTagHandler.ATTR_TYPE.equals(it.key, true)
+            ATTR_TYPE.equals(it.key, true)
         } ?.value
 
         if (resType.isNullOrBlank()) {
             logger.error {
-                "Attribute ${ResourceTagHandler.ATTR_TYPE} not set in tag $tag."
+                "Attribute $ATTR_TYPE not set in tag $tag."
             }
 
             return
         }
 
-        if (!resType.equals(ResourceTagHandler.TYPE_STRING, true)) {
+        if (!resType.equals(TYPE_STRING, true)) {
             logger.error { "Resource type $resType not supported by tag $tag." }
             return
         }
 
-        pkgName = context.packageName
+        val pkgName = context.packageName
         resId = resources.getIdentifier(name, resType, pkgName)
         if (resId == 0) {
             logger.error {
@@ -93,7 +88,7 @@ public class ResourceTagHandler @Inject constructor(
             return
         }
 
-        stringValue = resources.getString(resId)
+        val stringValue = resources.getString(resId)
         output.replace(start, end, stringValue)
     }
 
@@ -102,22 +97,22 @@ public class ResourceTagHandler @Inject constructor(
         /**
          * Tag.
          */
-        public const val TAG = "it-scoppelletti-resource"
+        public const val TAG: String = "it-scoppelletti-resource"
 
         /**
          * Attribute containing the resource name.
          */
-        public const val ATTR_NAME = "name"
+        public const val ATTR_NAME: String = "name"
 
         /**
          * Attribute containing the resource type.
          */
-        public const val ATTR_TYPE = "type"
+        public const val ATTR_TYPE: String = "type"
 
         /**
          * Resource type `string`.
          */
-        public const val TYPE_STRING = "string"
+        public const val TYPE_STRING: String = "string"
 
         private val logger = KotlinLogging.logger {}
     }

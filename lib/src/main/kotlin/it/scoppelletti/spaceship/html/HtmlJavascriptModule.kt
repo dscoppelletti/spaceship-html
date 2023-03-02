@@ -14,17 +14,15 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-        "RemoveRedundantQualifierName", "unused")
-
 package it.scoppelletti.spaceship.html
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.webkit.JavascriptInterface
+import it.scoppelletti.spaceship.app.AppExt
 import mu.KotlinLogging
 import javax.inject.Inject
 
@@ -44,14 +42,10 @@ public class HtmlJavascriptModule @Inject constructor(
      */
     @JavascriptInterface
     public fun getApplicationLabel(): String {
-        val applLabel: CharSequence
-        val pkgName: String
-        val applInfo: ApplicationInfo
+        val pkgName = context.packageName
 
-        pkgName = context.packageName
-
-        applInfo = try {
-            packageManager.getApplicationInfo(pkgName, 0)
+        val applInfo = try {
+            AppExt.getApplicationInfo(packageManager, pkgName, 0)
         } catch (ex: PackageManager.NameNotFoundException) {
             logger.error(ex) {
                 "Failed to get ApplicationInfo for package $pkgName."
@@ -60,7 +54,7 @@ public class HtmlJavascriptModule @Inject constructor(
             context.applicationInfo
         }
 
-        applLabel = packageManager.getApplicationLabel(applInfo)
+        val applLabel = packageManager.getApplicationLabel(applInfo)
         return applLabel.toString()
     }
 
@@ -69,13 +63,12 @@ public class HtmlJavascriptModule @Inject constructor(
      */
     @JavascriptInterface
     public fun getApplicationVersion(): String? {
-        val pkgName: String
         val pkgInfo: PackageInfo
 
-        pkgName = context.packageName
+        val pkgName = context.packageName
 
         try {
-            pkgInfo = packageManager.getPackageInfo(pkgName, 0)
+            pkgInfo = AppExt.getPackageInfo(packageManager, pkgName, 0)
         } catch (ex: PackageManager.NameNotFoundException) {
             logger.error(ex) {
                 "Failed to get PackageInfo for package $pkgName."
@@ -91,9 +84,9 @@ public class HtmlJavascriptModule @Inject constructor(
      * Returns the value of a resource.
      */
     @JavascriptInterface
+    @SuppressLint("DiscouragedApi")
     public fun getResourceValue(name: String?, resType: String?): String? {
         val resId: Int
-        val pkgName: String
 
         if (name.isNullOrBlank()) {
             logger.error("Argument name is null.")
@@ -105,12 +98,12 @@ public class HtmlJavascriptModule @Inject constructor(
             return null
         }
 
-        if (!resType.equals(HtmlJavascriptModule.TYPE_STRING, true)) {
+        if (!resType.equals(TYPE_STRING, true)) {
             logger.error { "Resource type $resType not supported." }
             return null
         }
 
-        pkgName = context.packageName
+        val pkgName = context.packageName
         resId = resources.getIdentifier(name, resType, pkgName)
         if (resId == 0) {
             logger.error {
@@ -128,12 +121,12 @@ public class HtmlJavascriptModule @Inject constructor(
         /**
          * Tag.
          */
-        public const val TAG = "it.scoppelletti.html.JavascriptModule"
+        public const val TAG: String = "it.scoppelletti.html.JavascriptModule"
 
         /**
          * Resource type `string`.
          */
-        public const val TYPE_STRING = "string"
+        public const val TYPE_STRING: String = "string"
 
         private val logger = KotlinLogging.logger {}
     }

@@ -14,14 +14,10 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-        "RemoveRedundantQualifierName")
-
 package it.scoppelletti.spaceship.html
 
 import android.text.Editable
 import mu.KotlinLogging
-import org.xml.sax.ContentHandler
 import org.xml.sax.XMLReader
 import javax.inject.Inject
 
@@ -32,17 +28,15 @@ import javax.inject.Inject
  * @since 1.0.0
  */
 public class ContentHandlerTagHandler @Inject constructor() :
-        HtmlTagHandler(ContentHandlerTagHandler.TAG) {
+        HtmlTagHandler(TAG) {
 
     override fun handleTag(
             output: Editable,
             start: Int,
             end: Int,
             xmlReader: XMLReader) {
-        val delegate: ContentHandler
-
         logger.debug("Install the custom ContentHandler interface.")
-        delegate = xmlReader.contentHandler
+        val delegate = xmlReader.contentHandler
         xmlReader.contentHandler = HtmlContentHandler(delegate)
     }
 
@@ -51,7 +45,7 @@ public class ContentHandlerTagHandler @Inject constructor() :
         /**
          * Tag.
          */
-        public const val TAG = "it-scoppelletti-contentHandler"
+        public const val TAG: String = "it-scoppelletti-contentHandler"
 
         private val logger = KotlinLogging.logger {}
     }
