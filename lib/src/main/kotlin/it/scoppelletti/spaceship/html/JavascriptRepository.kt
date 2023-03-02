@@ -14,8 +14,6 @@
  * limit
  */
 
-@file:Suppress("RedundantVisibilityModifier")
-
 package it.scoppelletti.spaceship.html
 
 import android.webkit.JavascriptInterface
@@ -34,13 +32,13 @@ public interface JavascriptRepository {
      * @return     The instance.
      */
     @JavascriptInterface
-    fun getModule(tag: String): Any?
+    public fun getModule(tag: String): Any?
 
     public companion object {
 
         /**
          * Name of the bound module.
          */
-        public const val MODULE = "spaceshipRepository"
+        public const val MODULE: String = "spaceshipRepository"
     }
 }

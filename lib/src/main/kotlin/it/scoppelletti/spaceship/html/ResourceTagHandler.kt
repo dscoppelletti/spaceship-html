@@ -102,22 +102,22 @@ public class ResourceTagHandler @Inject constructor(
         /**
          * Tag.
          */
-        public const val TAG = "it-scoppelletti-resource"
+        public const val TAG: String = "it-scoppelletti-resource"
 
         /**
          * Attribute containing the resource name.
          */
-        public const val ATTR_NAME = "name"
+        public const val ATTR_NAME: String = "name"
 
         /**
          * Attribute containing the resource type.
          */
-        public const val ATTR_TYPE = "type"
+        public const val ATTR_TYPE: String = "type"
 
         /**
          * Resource type `string`.
          */
-        public const val TYPE_STRING = "string"
+        public const val TYPE_STRING: String = "string"
 
         private val logger = KotlinLogging.logger {}
     }

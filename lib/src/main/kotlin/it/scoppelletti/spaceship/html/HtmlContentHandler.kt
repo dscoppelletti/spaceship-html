@@ -14,8 +14,6 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier")
-
 package it.scoppelletti.spaceship.html
 
 import mu.KotlinLogging
@@ -61,11 +59,8 @@ internal class HtmlContentHandler(
      * @return      Resulting collection.
      */
     private fun toMap(atts: Attributes): Map<String, String> {
-        val len: Int
-        val map: MutableMap<String, String>
-
-        len = atts.length
-        map = mutableMapOf()
+        val len = atts.length
+        val map = mutableMapOf<String, String>()
         for (idx: Int in 0 until len) {
             map[atts.getLocalName(idx)] = atts.getValue(idx)
         }
@@ -97,9 +92,7 @@ internal class HtmlContentHandler(
  * @since    1.0.0
  */
 public fun XMLReader.getCurrentAttributes(): Map<String, String> {
-    val contentHandler: HtmlContentHandler?
-
-    contentHandler = this.contentHandler as? HtmlContentHandler
+    val contentHandler = this.contentHandler as? HtmlContentHandler
     if (contentHandler == null) {
         logger.error("Custom ContentHandler interface not installed.")
         return emptyMap()

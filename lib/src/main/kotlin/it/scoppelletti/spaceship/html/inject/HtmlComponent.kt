@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:Suppress("RedundantVisibilityModifier")
-
 package it.scoppelletti.spaceship.html.inject
 
 import it.scoppelletti.spaceship.html.JavascriptRepository
@@ -28,7 +26,7 @@ import it.scoppelletti.spaceship.inject.AppComponentProvider
  */
 public interface HtmlComponent {
 
-    fun javascriptRepository(): JavascriptRepository
+    public fun javascriptRepository(): JavascriptRepository
 }
 
 /**
@@ -38,7 +36,7 @@ public interface HtmlComponent {
  */
 public interface HtmlComponentProvider : AppComponentProvider {
 
-    fun htmlComponent(): HtmlComponent
+    public fun htmlComponent(): HtmlComponent
 }
 
 

@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package it.scoppelletti.spaceship.html.sample.inject
 
 import dagger.Binds
@@ -17,6 +15,7 @@ abstract class SampleModule {
 
     @Binds
     @IntoMap
+    @Suppress("unused")
     @ViewModelKey(HtmlTextViewModel::class)
     abstract fun bindHtmlTextViewModelFactory(
             obj: HtmlTextViewModelFactory

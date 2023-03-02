@@ -14,11 +14,8 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier")
-
 package it.scoppelletti.spaceship.html
 
-import android.os.Build
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -38,12 +35,12 @@ public object HtmlExt {
     /**
      * Name of the `Html.TagHandler` dependency.
      */
-    public const val DEP_TAGHANDLER = "it.scoppelletti.spaceship.html.1"
+    public const val DEP_TAGHANDLER: String = "it.scoppelletti.spaceship.html.1"
 
     /**
      * Property containing a text.
      */
-    public const val PROP_TEXT = "it.scoppelletti.spaceship.html.1"
+    public const val PROP_TEXT: String = "it.scoppelletti.spaceship.html.1"
 }
 
 private const val SPAN_START = "<span>"
@@ -59,27 +56,20 @@ private const val SPAN_END = "</span>"
  * @return             Resulting styled text.
  * @since              1.0.0
  */
-@Suppress("deprecation")
 public suspend fun fromHtml(
         source: String,
         imageGetter: Html.ImageGetter? = null,
         tagHandler: Html.TagHandler? = null
 ) : Spanned = withContext(Dispatchers.Default) {
-    val html: String
-
     // - Android 8.1
     // If the source text starts with a custom tag, then the end of that tag is
     // not detected and it is assumed at the end of the source text:
     // Enclose the source text in a span element.
-    html = StringBuilder(SPAN_START)
+   val html = StringBuilder(SPAN_START)
             .append(source)
             .append(SPAN_END).toString()
 
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-        Html.fromHtml(html, imageGetter, tagHandler)
-    else
-        Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY, imageGetter,
-                tagHandler)
+    Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY, imageGetter, tagHandler)
 }
 
 /**
@@ -91,7 +81,6 @@ public suspend fun fromHtml(
  * @return           Resulting styled text.
  * @since            1.0.0
  */
-@Suppress("unused")
 public suspend fun Spanned.replaceHyperlinks(
         onClick: (String) -> Unit,
         filter: ((String) -> Boolean)?
@@ -119,15 +108,10 @@ private fun SpannableStringBuilder.replaceHyperlink(
         urlSpan: URLSpan,
         onClick: (String) -> Unit
 ) {
-    val start: Int
-    val end: Int
-    val flags: Int
-    val newSpan: ClickableSpan
-
-    start = this.getSpanStart(urlSpan)
-    end = this.getSpanEnd(urlSpan)
-    flags = this.getSpanFlags(urlSpan)
-    newSpan = object : ClickableSpan() {
+    val start = this.getSpanStart(urlSpan)
+    val end = this.getSpanEnd(urlSpan)
+    val flags = this.getSpanFlags(urlSpan)
+    val newSpan = object : ClickableSpan() {
 
         override fun onClick(widget: View) {
             onClick(urlSpan.url)

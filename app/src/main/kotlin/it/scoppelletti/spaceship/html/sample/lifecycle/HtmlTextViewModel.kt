@@ -1,5 +1,3 @@
-@file:Suppress("JoinDeclarationAndAssignment", "RemoveRedundantQualifierName")
-
 package it.scoppelletti.spaceship.html.sample.lifecycle
 
 import android.text.Html
@@ -27,9 +25,7 @@ class HtmlTextViewModel(
     val state: LiveData<HtmlTextState> = _state
 
     init {
-        val text: CharSequence?
-
-        text = handle[HtmlTextViewModel.PROP_TEXT]
+        val text: CharSequence? = handle[PROP_TEXT]
         if (text != null) {
             _state.value = HtmlTextState(text = text)
         }
@@ -40,7 +36,7 @@ class HtmlTextViewModel(
 
         try {
             text = fromHtml(source, null, tagHandler)
-            handle.set(HtmlTextViewModel.PROP_TEXT, text)
+            handle[PROP_TEXT] = text
             _state.value = HtmlTextState(text = text)
         } catch (ex: CancellationException) {
             throw ex

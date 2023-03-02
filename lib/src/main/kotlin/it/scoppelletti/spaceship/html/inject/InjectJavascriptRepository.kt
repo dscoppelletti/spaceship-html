@@ -14,9 +14,6 @@
  * limit
  */
 
-@file:Suppress("JoinDeclarationAndAssignment", "RedundantVisibilityModifier",
-    "unused")
-
 package it.scoppelletti.spaceship.html.inject
 
 import android.webkit.JavascriptInterface
@@ -47,10 +44,8 @@ public class InjectJavascriptRepository @Inject constructor(
      */
     @JavascriptInterface
     override fun getModule(tag: String): Any? {
-        val creator: Provider<JavascriptModule>?
-
-        creator = creators.entries.firstOrNull { tag.equals(it.key, true) }
-                ?.value
+        val creator = creators.entries
+            .firstOrNull { tag.equals(it.key, true) } ?.value
         if (creator == null) {
             logger.warn { "No Javascript module found for tag $tag." }
             return null
