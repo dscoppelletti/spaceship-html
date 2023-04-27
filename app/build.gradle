@@ -28,8 +28,15 @@ android {
     compileOptions {
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask).configureEach {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 configurations {
@@ -37,10 +44,6 @@ configurations {
     implementation.extendsFrom(bom)
     kapt.extendsFrom(bom)
     coreLibraryDesugaring.extendsFrom(bom)
-}
-
-kotlin {
-    jvmToolchain(17)
 }
 
 dependencies {
